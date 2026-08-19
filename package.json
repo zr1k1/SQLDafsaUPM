@@ -10,7 +10,7 @@
             "description": "Example scene and databases for converting SQLite word databases into DAFSA files.",
             "path": "Samples~/Example"
         }
-    ]
+    ],
     "keywords": [
         "sqlite",
         "sql",
