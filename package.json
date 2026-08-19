@@ -1,0 +1,20 @@
+{
+    "name": "com.r.sqldafsa",
+    "version": "1.0.0",
+    "displayName": "SQL → DAFSA",
+    "description": "Convert SQLite word databases into compact DAFSA binary files with extensible metadata support and fast runtime word lookup.",
+    "unity": "2021.3",
+    "keywords": [
+        "sqlite",
+        "sql",
+        "trie",
+        "dafsa",
+        "dictionary",
+        "word-database",
+        "serialization"
+    ],
+    "author": {
+        "name": "zr1k1"
+    },
+    "license": "MIT"
+}

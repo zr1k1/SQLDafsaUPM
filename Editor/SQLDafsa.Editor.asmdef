@@ -1,0 +1,16 @@
+{
+    "name": "com.r.sqldafsa.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:be6bef00c771942d08c96413b9e0b9e2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
