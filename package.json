@@ -4,6 +4,13 @@
     "displayName": "SQL → DAFSA",
     "description": "Convert SQLite word databases into compact DAFSA binary files with extensible metadata support and fast runtime word lookup.",
     "unity": "2021.3",
+    "samples": [
+        {
+            "displayName": "SQL → DAFSA Example",
+            "description": "Example scene and databases for converting SQLite word databases into DAFSA files.",
+            "path": "Samples~/Example"
+        }
+    ]
     "keywords": [
         "sqlite",
         "sql",
