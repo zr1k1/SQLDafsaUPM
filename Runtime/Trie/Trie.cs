@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WordTrie {
+namespace Dafsa {
     public readonly struct WordEntry<TWordMetadata> {
         public readonly string Word;
         public readonly TWordMetadata Metadata;

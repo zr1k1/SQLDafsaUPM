@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace WordTrie {
+namespace Dafsa {
     public static partial class DafsaRuntimeSerializer<TWordMetadata> where TWordMetadata : WordMetadata, new() {
         private const int Magic = 0x44414653; // DAFS
         private const int Version = 1;

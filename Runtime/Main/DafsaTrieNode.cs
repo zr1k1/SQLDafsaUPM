@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WordTrie {
+namespace Dafsa {
     public class DafsaTrieNode {
         public bool IsTerminal;
 

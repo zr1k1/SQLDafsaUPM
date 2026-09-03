@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace WordTrie {
+namespace Dafsa {
     public static class TrieSerializer<TWordMetadata> where TWordMetadata : WordMetadata, new() {
         public static void Save(Trie<TWordMetadata> trie, string path) {
             if (trie == null)

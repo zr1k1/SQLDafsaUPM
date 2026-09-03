@@ -1,4 +1,4 @@
-namespace WordTrie {
+namespace Dafsa {
     using System;
     using System.Collections.Generic;
     using UnityEngine;

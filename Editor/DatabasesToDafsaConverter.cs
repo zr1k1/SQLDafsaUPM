@@ -4,7 +4,7 @@ using System.IO;
 using System;
 using System.Linq;
 using UnityEditor;
-using WordTrie;
+using Dafsa;
 
 [Serializable]
 public class LanguageDatabase {
