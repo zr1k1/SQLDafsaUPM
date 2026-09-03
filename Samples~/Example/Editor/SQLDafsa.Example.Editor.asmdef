@@ -1,10 +1,19 @@
 {
     "name": "SQLDafsa.Example.Editor",
+    "rootNamespace": "",
     "references": [
-        "com.r.sqldafsa",
-        "com.r.sqldafsa.editor"
+        "SQLDafsa.Editor",
+        "SQLDafsa.Runtime"
     ],
     "includePlatforms": [
         "Editor"
-    ]
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

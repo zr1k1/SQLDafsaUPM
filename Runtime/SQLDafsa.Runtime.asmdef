@@ -1,5 +1,5 @@
 {
-    "name": "SQLDafsa",
+    "name": "SQLDafsa.Runtime",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
