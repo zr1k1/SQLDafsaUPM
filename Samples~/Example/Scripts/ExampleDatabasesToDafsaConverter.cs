@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using WordTrie;
+using Dafsa;
 
 /// <summary>
 /// Example metadata stored for each word in the DAFSA.
