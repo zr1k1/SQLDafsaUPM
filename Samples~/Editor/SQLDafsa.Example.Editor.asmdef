@@ -1,0 +1,10 @@
+{
+    "name": "SQLDafsa.Example.Editor",
+    "references": [
+        "com.r.sqldafsa",
+        "com.r.sqldafsa.editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}
