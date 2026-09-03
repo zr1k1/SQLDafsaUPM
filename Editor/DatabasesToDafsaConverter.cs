@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
@@ -169,3 +170,4 @@ public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour w
         );
     }
 }
+#endif

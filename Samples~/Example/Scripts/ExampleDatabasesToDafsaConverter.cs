@@ -1,31 +1,12 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Dafsa;
 
-/// <summary>
-/// Example metadata stored for each word in the DAFSA.
-///
-/// Inherit from WordMetadata and add any fields that should be
-/// stored for each word.
-///
-/// The ReflectionBinarySerializer automatically serializes the
-/// public instance fields of this class.
-///
-/// To create custom metadata, create another class derived from
-/// WordMetadata and add the required fields.
-/// </summary>
-public class ExampleWordmetaData : WordMetadata {
-    // Example metadata field.
-    public bool Good;
-
-    // Example of an additional custom metadata field.
-    // public int SomeData;
-}
-
 
 /// <summary>
-/// Example converter that builds a DAFSA using ExampleWordmetaData.
+/// Example converter that builds a DAFSA using ExampleWordMetadata.
 ///
 /// The generated DAFSA files are saved to Unity's StreamingAssets folder.
 /// This allows the files to be included in the final application and
@@ -40,7 +21,7 @@ public class ExampleWordmetaData : WordMetadata {
 ///
 /// The DAFSA and serialization code do not need to be changed.
 /// </summary>
-public class ExampleDatabasesToDafsaConverter : DatabasesToDafsaConverter<ExampleWordmetaData> {
+public class ExampleDatabasesToDafsaConverter : DatabasesToDafsaConverter<ExampleWordMetadata> {
 
     [Header("Example things")]
 
@@ -69,8 +50,8 @@ public class ExampleDatabasesToDafsaConverter : DatabasesToDafsaConverter<Exampl
     /// wordWordsListIndex is the index of the word in the source
     /// word list and is used to retrieve the corresponding database data.
     /// </summary>
-    public override ExampleWordmetaData SetupMetadataForWord(SimpleDatabase db, int wordWordsListIndex) {
-        return new ExampleWordmetaData {
+    public override ExampleWordMetadata SetupMetadataForWord(SimpleDatabase db, int wordWordsListIndex) {
+        return new ExampleWordMetadata {
             // Read the "Good" value from the database.
             Good = _goods[wordWordsListIndex] == 1,
 
@@ -91,7 +72,7 @@ public class ExampleDatabasesToDafsaConverter : DatabasesToDafsaConverter<Exampl
 
         // Load the DAFSA using the same metadata type that was used
         // when the file was created.
-        _dafsaRuntime = DafsaRuntimeSerializer<ExampleWordmetaData>.Load(path);
+        _dafsaRuntime = DafsaRuntimeSerializer<ExampleWordMetadata>.Load(path);
 
         Debug.Log(
             $"DatabasesToDafsaConverter : " +
@@ -115,3 +96,4 @@ public class ExampleDatabasesToDafsaConverter : DatabasesToDafsaConverter<Exampl
         }
     }
 }
+#endif
