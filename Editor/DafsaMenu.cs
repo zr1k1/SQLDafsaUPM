@@ -12,10 +12,10 @@ public static class DafsaMenu {
     private const string SampleDisplayName = "SQL → DAFSA Example";
 
     private const string SceneRelativePath =
-        "Scenes/Databases_To_DAFSA_Converter_Scene.unity";
+        "Scenes/Databases_To_DAFSA_Example_Scene.unity";
 
-    [MenuItem("DAFSA/Open Converter")]
-    public static void OpenConverterScene() {
+    [MenuItem("DAFSA/Open Example Scene")]
+    public static void OpenExampleScene() {
         string packageRoot = FindPackageRoot();
 
         if (string.IsNullOrEmpty(packageRoot)) {

@@ -10,13 +10,15 @@ using Dafsa;
 [Serializable]
 public class LanguageDatabase {
     public SystemLanguage Language;
-    public DefaultAsset Database;
+    public string DatabasePath;
 }
 
-public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour where TWordMetadata : WordMetadata, new() {
+public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour
+    where TWordMetadata : WordMetadata, new() {
+
     public const string FOLDER_IN_STREAMING_ASSETS = "GeneratedDafsaDatFiles";
 
-    [Tooltip("Result name will be en{dafseCommonFileName}, ru{dafseCommonFileName})")]
+    [Tooltip("Result name will be en{dafseCommonFileName}, ru{dafseCommonFileName}")]
     [SerializeField] protected string _dafseCommonFileName = default;
     [SerializeField] protected string _wordsTableName = default;
     [SerializeField] protected string _wordsColumnName = default;
@@ -30,14 +32,13 @@ public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour w
     protected DafsaRuntime<TWordMetadata> _dafsaRuntime;
 
     public void BuildAll() {
-
         Directory.CreateDirectory(Application.streamingAssetsPath);
 
         var languages = new HashSet<SystemLanguage>();
 
         foreach (var database in _databases) {
-            if (database.Database == null) {
-                Debug.LogWarning($"Database for {database.Language} is null.");
+            if (string.IsNullOrEmpty(database.DatabasePath)) {
+                Debug.LogWarning($"Database for {database.Language} is not specified.");
                 continue;
             }
 
@@ -53,9 +54,7 @@ public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour w
             }
         }
 
-#if UNITY_EDITOR
         AssetDatabase.Refresh();
-#endif
 
         Debug.Log("DAFSA build finished.");
     }
@@ -65,7 +64,7 @@ public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour w
 
         Debug.Log($"Building {language}...");
 
-        string databasePath = AssetDatabase.GetAssetPath(database.Database);
+        string databasePath = database.DatabasePath;
 
         if (string.IsNullOrEmpty(databasePath)) {
             Debug.LogError($"Failed to get path for {language} database.");
@@ -77,8 +76,6 @@ public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour w
             return;
         }
 
-        // DAFSA files are generated into Unity's StreamingAssets folder.
-        // The files are loaded from this folder at runtime.
         string outputPath = Path.Combine(
             Application.streamingAssetsPath,
             FOLDER_IN_STREAMING_ASSETS,
@@ -108,29 +105,47 @@ public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour w
 
         var metadata = wordEntries.Select(x => x.Metadata).ToArray();
 
-        DafsaRuntimeSerializer<TWordMetadata>.Save(nodes, edges, outputPath, wordEntries.Count, metadata);
+        DafsaRuntimeSerializer<TWordMetadata>.Save(
+            nodes,
+            edges,
+            outputPath,
+            wordEntries.Count,
+            metadata
+        );
+
         Debug.Log($"Saved: {outputPath}");
     }
 
-    void FillWordsDatasFromDB(string databasePath, out List<WordEntry<TWordMetadata>> wordEntries) {
+    void FillWordsDatasFromDB(
+        string databasePath,
+        out List<WordEntry<TWordMetadata>> wordEntries) {
+
         using (var db = new SimpleDatabase(databasePath)) {
             SetupDataFromDatabase(db, out wordEntries);
         }
     }
 
-    public virtual void SetupDataFromDatabase(SimpleDatabase db, out List<WordEntry<TWordMetadata>> wordEntries) {
+    public virtual void SetupDataFromDatabase(
+        SimpleDatabase db,
+        out List<WordEntry<TWordMetadata>> wordEntries) {
+
         wordEntries = new();
 
-        var words = db.GetColumn<string>(_wordsTableName, _wordsColumnName);
+        var words = db.GetColumn<string>(
+            _wordsTableName,
+            _wordsColumnName
+        );
+
         if (words.Count == 0) {
             Debug.LogError("Words database is empty.");
             return;
         }
+
         FillNeededListsOfColumnElements(db);
 
         int duplicates = 0;
-        for (int i = 0; i < words.Count; i++) {
 
+        for (int i = 0; i < words.Count; i++) {
             string word = words[i];
 
             if (string.IsNullOrEmpty(word))
@@ -138,21 +153,27 @@ public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour w
 
             var metadata = SetupMetadataForWord(db, i);
 
-            wordEntries.Add(new WordEntry<TWordMetadata>(word, metadata));
+            wordEntries.Add(
+                new WordEntry<TWordMetadata>(word, metadata)
+            );
         }
 
-        wordEntries.Sort(static (a, b) => string.CompareOrdinal(a.Word, b.Word));
+        wordEntries.Sort(
+            static (a, b) => string.CompareOrdinal(a.Word, b.Word)
+        );
 
-        Debug.Log($"Loaded {wordEntries.Count} words, duplicates skipped: {duplicates}");
+        Debug.Log(
+            $"Loaded {wordEntries.Count} words, duplicates skipped: {duplicates}"
+        );
     }
 
     public abstract void FillNeededListsOfColumnElements(SimpleDatabase db);
 
-    public abstract TWordMetadata SetupMetadataForWord(SimpleDatabase db, int wordWordsListIndex);
+    public abstract TWordMetadata SetupMetadataForWord(
+        SimpleDatabase db,
+        int wordWordsListIndex
+    );
 
-    /// <summary>
-    /// Example of loading the generated DAFSA and reading metadata
-    /// for a specific word.
     public virtual void TestLoadDafsa() {
         string path = Path.Combine(
             Application.streamingAssetsPath,
@@ -160,8 +181,6 @@ public abstract class DatabasesToDafsaConverter<TWordMetadata> : MonoBehaviour w
             $"{LanguageUtils.LanguageIdStringForType(_testLanguageToLoadGeneratedDafsaFile)}{_dafseCommonFileName}.dat"
         );
 
-        // Load the DAFSA using the same metadata type that was used
-        // when the file was created.
         _dafsaRuntime = DafsaRuntimeSerializer<TWordMetadata>.Load(path);
 
         Debug.Log(
